@@ -2,7 +2,7 @@
 <?php require_once('../app/views/inc/header.php'); ?>
 
     <!-- Lo que aparece en la pagina principal va aqui -->
-    <h1>Pagina</h1>
+    <h1>Pagina principal</h1>
     
     <table>
 	    <thead>
@@ -80,9 +80,23 @@
 					<a href="#"><i class="fas fa-edit edit"></i></a>
         			<a href="#"><i class="fas fa-trash-alt delete"></i></a>
 				</td>
-	    	</tr>
+			</tr>
 	    </tbody>
 	</table>
+	<!-- Paginacion -->
+	<section class="paginacion">
+
+		<ul>
+			<li class="disabled">&laquo;</li>
+			<li class="Active"><a href="#">1</a></li>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+			<a class="fin" href="#">&raquo;</a>
+		</ul>
+
+</section>
 
 
 <?php require_once('../app/views/inc/footer.php'); ?>
+
