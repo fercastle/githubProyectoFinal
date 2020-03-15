@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/menu.css">
     <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/tabla.css">
+    <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/paginacion.css">
 
 </head>
 <body>
