@@ -2,7 +2,7 @@
 <?php require_once('../app/views/inc/header.php'); ?>
 
     <!-- Lo que aparece en la pagina principal va aqui -->
-    <h1>Pagina Inicial</h1>
+    <h1>Pagina Principal</h1>
     
     <table>
 	    <thead>
