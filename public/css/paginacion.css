@@ -1,0 +1,95 @@
+.paginacion {
+    display: block;
+    padding-left: 10%;
+    
+}
+
+.paginacion ul {
+    box-shadow: 10px 10px 5px #aaaaaa;
+    width: max-content;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    list-style: none;
+}
+
+.paginacion ul li{
+    display:  inline-block;
+    margin-left: 1px;
+    
+}
+
+.paginacion ul .Active a {
+    background: #1236da;
+}
+
+.paginacion ul .disabled:first-child {
+    background: #c8c8c8;
+    display: inline-block;
+    font-family: "Roboto",Arial, Helvetica, sans-serif;
+    padding: 15px 25px;
+    cursor: not-allowed;
+    color: #fff;
+    text-decoration: none;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+.paginacion ul .disabled:last-child {
+    background: #c8c8c8;
+    display: inline-block;
+    font-family: "Roboto",Arial, Helvetica, sans-serif;
+    padding: 15px 25px;
+    cursor: not-allowed;
+    color: #fff;
+    text-decoration: none;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.paginacion .inicio {
+    display: inline-block;
+    font-family: "Roboto",Arial, Helvetica, sans-serif;
+    padding: 15px 25px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+  }
+  
+  .paginacion .fin {
+    display: inline-block;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    font-family: "Roboto",Arial, Helvetica, sans-serif;
+    padding: 15px 25px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .paginacion .fin:hover {
+    background: #4265ffb4;
+  }
+
+  
+.paginacion .inicio:hover {
+    background: #4265ffb4;
+}
+
+.paginacion ul li a {
+    display: inline-block;
+    font-family: "Roboto",Arial, Helvetica, sans-serif;
+    padding: 15px 25px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+}
+
+.paginacion ul li a:hover {
+    text-decoration: none;
+    background: #4265ffb4;
+   
+}
