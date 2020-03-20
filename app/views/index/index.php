@@ -12,7 +12,7 @@
    	 		</tr>
 			<tr>
 				<!-- Se debe ajustar el ancho de las tablas -->
-				<th width="10">Estudiante</th>
+				<th width="10">Manipulador</th>
 				<th>Nombre</th>
 				<th>Apellido</th>
 				<th>Edad</th>
