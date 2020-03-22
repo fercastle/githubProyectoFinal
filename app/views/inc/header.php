@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="container" id="blur">
-    <div class="contenedor active" id="contenedor">
+    <div class="contenedor" id="contenedor">
 
         <!-- Trabajando con el encabezado del archivo menu -->
         <header class="header">

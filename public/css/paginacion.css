@@ -1,12 +1,14 @@
 .paginacion {
-    display: block;
-    padding-left: 10%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    margin-left: 5%; 
+    background: rgba(1, 1  , 1, 0.0);
     
 }
 
 .paginacion ul {
-    box-shadow: 10px 10px 5px #aaaaaa;
-    width: max-content;
+    width: 100%;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
     border-top-right-radius: 50px;
@@ -15,59 +17,75 @@
 }
 
 .paginacion ul li{
+    box-shadow: 10px 10px 5px #aaaaaa;
+    font-weight: 900;
+    font-size: 12px;
     display:  inline-block;
-    margin-left: 1px;
-    
+    margin-bottom: 3px;
 }
 
 .paginacion ul .Active a {
+    box-shadow: 10px 10px 5px #c7c7c7;
+    font-weight: 900;
     background: #1236da;
+    font-size: 12px;
 }
 
 .paginacion ul .disabled:first-child {
+    box-shadow: 10px 10px 5px #c7c7c7;
     background: #c8c8c8;
     display: inline-block;
-    font-family: "Roboto",Arial, Helvetica, sans-serif;
-    padding: 15px 25px;
+    padding: 4px 8px;
     cursor: not-allowed;
     color: #fff;
     text-decoration: none;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
+    font-weight: 900;
+    font-size: 12px;
+
 }
 
 .paginacion ul .disabled:last-child {
+    box-shadow: 10px 10px 5px #c7c7c7;
     background: #c8c8c8;
     display: inline-block;
-    font-family: "Roboto",Arial, Helvetica, sans-serif;
-    padding: 15px 25px;
+    padding: 4px 8px;
     cursor: not-allowed;
     color: #fff;
     text-decoration: none;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
+    font-weight: 900;
+    font-size: 12px;
 }
 
 .paginacion .inicio {
+    box-shadow: 10px 10px 5px #aaaaaa;
+
     display: inline-block;
-    font-family: "Roboto",Arial, Helvetica, sans-serif;
-    padding: 15px 25px;
+    padding: 4px 8px;
     background: #000;
     color: #fff;
     text-decoration: none;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
+    font-weight: 900;
+    font-size: 12px;
   }
   
   .paginacion .fin {
+    box-shadow: 10px 10px 5px #aaaaaa;
+
     display: inline-block;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
-    font-family: "Roboto",Arial, Helvetica, sans-serif;
-    padding: 15px 25px;
+    padding: 4px 8px;
     background: #000;
     color: #fff;
     text-decoration: none;
+    font-weight: 900;
+    font-size: 12px;
   }
 
   .paginacion .fin:hover {
@@ -81,11 +99,12 @@
 
 .paginacion ul li a {
     display: inline-block;
-    font-family: "Roboto",Arial, Helvetica, sans-serif;
-    padding: 15px 25px;
+    padding: 4px 8px;
     background: #000;
     color: #fff;
     text-decoration: none;
+    font-weight: 900;
+    font-size: 12px;
 }
 
 .paginacion ul li a:hover {
@@ -93,3 +112,23 @@
     background: #4265ffb4;
    
 }
+/* 
+@media (min-width: 1049px) {    
+    .paginacion {
+        width: 1249px;
+        display: flex;
+        justify-content: center;
+         
+        background: rgba(1, 1  , 1, 0.0);
+    }
+}
+@media (max-width: 1049px) {    
+    .paginacion {
+        width: 1049px;
+        display: flex;
+        justify-content: center;
+         /* padding-left: 10%;  */
+        background: rgba(1, 1  , 1, 0.0);
+        
+    }
+} */
