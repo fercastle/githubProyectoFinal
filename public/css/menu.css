@@ -8,11 +8,24 @@ body{
     font-family: 'Open Sans', sans-serif;
 }
 
+.container{
+    position: relative;
+    
+    /* display: flex; */
+}
+.container#blur.active{
+    
+    -webkit-filter: blur(5px);
+    filter: blur(5px);
+    pointer-events: none;
+    user-select: none;
+}
 /* Estilo para las referencias */
 a{
     text-decoration: none;
     color: #000000;
 }
+
 
 /* Estilos para la clase contenedor del menu.html */
 .contenedor{

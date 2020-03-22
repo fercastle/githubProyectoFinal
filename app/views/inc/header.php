@@ -8,9 +8,12 @@
     <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/menu.css">
     <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/tabla.css">
     <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/paginacion.css">
+    <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/formulario.css">
+
 
 </head>
 <body>
+    <div class="container" id="blur">
     <div class="contenedor active" id="contenedor">
 
         <!-- Trabajando con el encabezado del archivo menu -->

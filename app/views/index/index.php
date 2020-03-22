@@ -27,7 +27,7 @@
 				<td data-label="Apellido Estudiante">buriticá</td>
 				<td data-label="edad Estudiante">21</td>
 				<td data-label="Opciones">
-					<a href="#"><i class="fas fa-edit edit"></i></a>
+					<a onclick="toggle()" href="#"><i class="fas fa-edit edit"></i></a>
         			<a href="#"><i class="fas fa-trash-alt delete"></i></a>
 				</td>
 			</tr>
@@ -95,8 +95,7 @@
 			<a class="fin" href="#">&raquo;</a>
 		</ul>
 
-</section>
-
+	</section>
 
 <?php require_once('../app/views/inc/footer.php'); ?>
 
