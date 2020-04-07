@@ -1,14 +1,14 @@
 
 <?php require_once('../app/views/inc/header.php'); ?>
 
+	
     <!-- Lo que aparece en la pagina principal va aqui -->
     <h1>Unidad Comunitaria de Salud Familiar</h1>
-<div>  
     <table>
 	    <thead>
 			<tr>
 				<!-- colspan="Numero de columnas que tendra la tabla" -->
-      			<th colspan="5">Lista de Manipuladores</th>
+      			<th colspan="5"><?php echo $parameters['lista']?></th>
    	 		</tr>
 			<tr>
 				<!-- Se debe ajustar el ancho de las tablas -->
@@ -193,6 +193,5 @@
 		</ul>
 
 	</section>
-</div>
 <?php require_once('../app/views/inc/footer.php'); ?>
 

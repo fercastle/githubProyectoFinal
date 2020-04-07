@@ -1,20 +1,24 @@
 <?php
 
-class index extends MainController
-{
-	
-	// function __construct()
-	// {
-	// 	//echo "index ";
-	// }
+    // lo primero que se hace siempre es poner le nombre 
 
-	public function index(){
-		// $this->model("IndexModel");
+    class Index extends MainController{
 
-		$parameters = ['title' => 'Bienvenidos a mi sitio web'];
+        function __construct(){
 
-		$this->view("index/index", $parameters);
-	}
-}
+            $this->modeloUsuarios = $this->model('modeloUsuarios');
+        }
 
+        function index(){
+
+            $parameters = [
+                'menu' => 'Inicio',
+                'lista'=> 'Lista de Manipuladores'
+            ];
+
+
+
+            $this->view('index/index', $parameters);
+        }
+    }
 ?>

@@ -6,6 +6,9 @@
     //Cargamos las librerias
     require_once('config/config.php');
 
+    // funcion para calcular edad
+    require_once('helpers/calcularEdad.php');
+    require_once('helpers/sanitize.php');
     //Cargamos todos los archivos de la carpeta library
     spl_autoload_register(function($className){
         require_once('library/' . $className .'.php');

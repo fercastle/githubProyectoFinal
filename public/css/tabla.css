@@ -1,19 +1,74 @@
-*{
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	
-	font-size: 17px;
+.btn-ver:hover{
+	background-color: #1236da;
+	color: white;
+	box-shadow: 1px 4px 5px #0a2394;
+}
+
+.btn-ver{
+	border-radius: 50px;
+	padding: 5px 5px;
+	background-color: #fff; 
+	color: #1236da; 
+	border: 1px solid #1236da;
+	box-shadow: 1px 4px 5px #292929;
+}
+
+.btn-nuevo:hover {
+	background-color: #1236da;
+	color: white;
+	box-shadow: 1px 4px 5px #0a2394;
+}
+.btn-nuevo{
+	border-radius: 50px;
+	padding: 0px 20px;
+	background-color: #fff; 
+	color: black; 
+	color: #1236da;
+	border: 2px solid #1236da;
+	text-transform: uppercase;
+	font-weight: 900;
+	box-shadow: 1px 4px 5px #292929;
+}
+.btn-editar:hover {
+	background-color: #3cd300;
+	color: white;
+	box-shadow: 1px 4px 5px #278a00;
+}
+.btn-editar{
+	border-radius: 50px;
+	padding: 5px 5px;
+	background-color: #fff; 
+	color: #278a00; 
+	border: 1px solid #3cd300;
+	box-shadow: 1px 4px 5px #747474;
+}
+
+.btn-desactivar:hover {
+	background-color: #f50b0b;
+	color: white;
+	box-shadow: 1px 4px 5px #940a0a;
+}
+.btn-desactivar{
+	border-radius: 50px;
+	padding: 5px 6px;
+	background-color: #fff; 
+	color: #8b0909; 
+	border: 1px solid #f50b0b;
+	box-shadow: 1px 4px 5px #8b0909;
 }
 
 table {
 	text-align: left;
 	line-height: 40px;
+	width: 90%;
 	border-collapse: separate;
 	border-spacing: 0;
 	border: 1px solid #070707;
-	
-	margin: 20px auto;
-	border-radius: .25rem;
-	width: 75%;
+	margin: 10px auto;
+	border-top-left-radius: .25rem;
+	border-top-right-radius: .25rem;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
 	box-shadow: 10px 10px 5px #aaaaaa;
 }
 
@@ -22,10 +77,23 @@ thead tr:first-child {
 	color: #fff;
 	border: none;
 }
+thead tr th .title{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.lista-botones{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
 
 th:first-child,
 td:first-child {
-	padding: 0 15px 0 20px;
+	padding: 0 10px 0 20px;
 }
 
 th {
