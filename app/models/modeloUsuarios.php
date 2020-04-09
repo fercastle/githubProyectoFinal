@@ -46,6 +46,32 @@
             return $this->db->rowCount();
         }
 
+        public function TotalPaginacionUsuariosBusquedaNombre($busqueda){
+     
+            $this->db->query(
+                "SELECT * FROM usuarios 
+                WHERE (LOWER(CONCAT(nombreusuario,' ',apellidousuario)) LIKE '$busqueda' OR
+                LOWER(CONCAT(apellidousuario,' ',nombreusuario)) LIKE '$busqueda'
+                )
+                AND estadousuario = 1     
+            ");
+            return $this->db->rowCount();
+
+        }
+
+        public function obtnerUsuariosBusquedaNombre($busqueda, $inicio, $numeroPaginas){
+            $this->db->query(
+                "SELECT * FROM usuarios
+                WHERE( LOWER(CONCAT(nombreusuario,apellidousuario)) LIKE '$busqueda' OR
+                LOWER(CONCAT(apellidousuario,' ',nombreusuario)) LIKE '$busqueda'
+                )
+                AND estadousuario = 1
+                LIMIT $inicio, $numeroPaginas
+                -- ORDER BY nombreusuario DESC
+                ");
+            return $this->db->registers();
+        }
+
         public function obtnerUsuariosBusqueda($busqueda, $inicio, $numeroPaginas){
 
             $this->db->query(

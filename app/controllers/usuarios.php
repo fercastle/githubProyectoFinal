@@ -111,8 +111,10 @@ class Usuarios extends MainController
 	
 		// Guardando la busqueda
 		if (isset($_GET['busqueda'])) {
+			// convirtiendo a minusculas
 			$busqueda = strtolower($_GET['busqueda']);
 		}elseif(isset($_POST['busqueda'])){
+			// convirtiendo a minusculas
 			$busqueda = strtolower($_POST['busqueda']);
 		}
 		
@@ -148,8 +150,29 @@ class Usuarios extends MainController
 		if (($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET') and ($busqueda != null or $busqueda != '')) {
 			
 			$busqueda = sanitize($busqueda);
-			$totalArticulos = $this->ModeloUsuarios->TotalPaginacionUsuariosBusqueda($busqueda);
-			$usuarios = $this->ModeloUsuarios->obtnerUsuariosBusqueda($busqueda, $inicio, $postPorPagina);
+			
+			// Verificando si existe algun espacio dentro de la busqueda
+			if (strpos($busqueda, ' ') !== false) {
+		
+				$busquedaNombre = explode(' ', $busqueda);
+				
+				// agregando los %% a cada elemento del arreglo
+				for($i = 0; $i < count($busquedaNombre); $i++){
+					$busquedaNombre[$i] = '%'.$busquedaNombre[$i].'%';
+				}
+				// convirtiendo el arreglo a str
+				$busquedaNombre = implode($busquedaNombre);
+				
+				$totalArticulos = $this->ModeloUsuarios->TotalPaginacionUsuariosBusquedaNombre($busquedaNombre);
+
+				$usuarios = $this->ModeloUsuarios->obtnerUsuariosBusquedaNombre($busquedaNombre, $inicio, $postPorPagina);
+			}else{
+
+				$totalArticulos = $this->ModeloUsuarios->TotalPaginacionUsuariosBusqueda($busqueda);
+
+				$usuarios = $this->ModeloUsuarios->obtnerUsuariosBusqueda($busqueda, $inicio, $postPorPagina);
+			}
+			
 		
 		}
 		//filtros de busqueda 
