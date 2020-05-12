@@ -25,9 +25,10 @@ class Usuarios extends MainController
 		// ruta de este controllador para manejar la busqueda
 		$rutaContrBusqueda = ROUTE_URL.'/usuarios';
 		$busqueda = null;
+		//variable que optiene el id del registro a eliminar
 		$idEliminar = null;
 		$usuario = null;
-		//variable que optiene el id del registro a eliminar
+		$realizado = false;
 							
 		//Para eliminar un registro
 		if(isset($_GET['eliminar']) and $_GET['eliminar'] != 0){
@@ -39,7 +40,7 @@ class Usuarios extends MainController
 		}elseif (isset($_GET['id']) and $_GET['id'] != 0) {
 			
 			$this->ModeloUsuarios->desactivar($_GET['id']);
-			
+			$realizado = true;
 		}
 
 		
@@ -108,6 +109,34 @@ class Usuarios extends MainController
 
 		//capturando los rangos del id
 		$numIds = range($inicio, $finNumId);
+
+		// si no encuentra ningun usuario se va a la pagina principal
+		
+			
+		if (isset($_GET['id']) and $_GET['id'] != 0) {
+			
+			if (count($usuarios) == 0) {
+			
+				$parameters = [
+					//numero de paginas para la paginacion
+					'numeroPaginas' => $numeroPaginas,
+					'numIds' => $numIds,
+					'menu' => 'usuarios',
+					'title' => 'UCSF',
+					'usuario' => $usuario,
+					'usuarios' => $usuarios,
+					'pagina' => $pagina,
+					'busqueda' => $busqueda,
+					'rutaContrBusqueda' => $rutaContrBusqueda,
+					'totalArticulos' => $totalArticulos,
+					'idEliminar' => $idEliminar,
+					'realizado' => $realizado
+				];
+		
+				$this->view('usuarios/index', $parameters);
+			}
+		}
+		
 	
 		$parameters = [
 			//numero de paginas para la paginacion
@@ -121,15 +150,14 @@ class Usuarios extends MainController
 			'busqueda' => $busqueda,
 			'rutaContrBusqueda' => $rutaContrBusqueda,
 			'totalArticulos' => $totalArticulos,
-			'idEliminar' => $idEliminar
+			'idEliminar' => $idEliminar,
+			'realizado' => $realizado
 		];
 
 		$this->view('usuarios/index', $parameters);
 
 	
 }
-
-
 
 	public function usuariosDesactivados(){
 		
@@ -139,6 +167,7 @@ class Usuarios extends MainController
 		$idActivar = null;
 		// // numero de registros a mostrar por pagina
 		$cantElementPorPag = 11;
+		$realizado = false;
 		//Para activar un registro
 		if(isset($_GET['activar']) and $_GET['activar'] != 0){
 			$idActivar = $_GET['activar'];
@@ -151,14 +180,13 @@ class Usuarios extends MainController
 			//recarga a la pagina inicial si se activo el ultimo registro de la paginacion
 			
 
-		}else if (isset($_GET['id']) and $_GET['id'] != 0) {
+		}elseif (isset($_GET['id']) and $_GET['id'] != 0) {
 			
 			$this->ModeloUsuarios->activar($_GET['id']);
+			$realizado = true;
 		
 		}
-		
-		
-	
+			
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['busqueda']) and $_POST['busqueda'] != '')  {
 			
 		
@@ -171,10 +199,7 @@ class Usuarios extends MainController
 
 		}
 
-
 		$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-
-		
 
 		// // guardando ultimo registro de cada pagina
 		$inicio = ($pagina > 1) ? ($pagina * $cantElementPorPag - $cantElementPorPag) : 0;
@@ -220,13 +245,7 @@ class Usuarios extends MainController
 				
 		}
 	
-		
 		$numeroPaginas = ceil($totalArticulos / $cantElementPorPag);
-
-		if (!$usuarios) {
-			
-			$busqueda = 'No hay conincidencias';
-		}
 
 		// obtener formato de edad de 1990-04-19 a 30
 			$usuarios = formatoEdad($usuarios);
@@ -235,12 +254,28 @@ class Usuarios extends MainController
 		$numeroFinalRegistro = ($pagina + 1) * $cantElementPorPag - $cantElementPorPag;
 		$numeroRegistro = range($inicio, $numeroFinalRegistro);
 
+		// si no encuentra ningun usuario se va a la pagina principal
 		if (isset($_GET['id']) and $_GET['id'] != 0) {
-			if ((isset($_GET['totalArticulos']) and $_GET['totalArticulos'] == 1) || ($cantElementPorPag ==  $_GET['totalArticulos'] - 1) || count($usuarios) == 1) {
-				header("location:".ROUTE_URL."/usuarios/usuariosDesactivados");
+			
+			if (count($usuarios) == 0) {
+				$parameters = [
+					"title" => "Usuarios-inactivos",
+					"menu" => "usuarios",
+					"usuarios" => $usuarios,
+					"numeroPaginas" => $numeroPaginas,
+					"pagina" => $pagina,
+					"numeroRegistro" => $numeroRegistro,
+					"busqueda" => $busqueda,
+					"rutaContrBusqueda" => $rutaContrBusqueda,
+					"usuario" => $usuario,
+					"idActivar"=> $idActivar,
+					"totalArticulos" => $totalArticulos,
+					'realizado' => $realizado
+					
+				];
+				$this->view("usuarios/usuariosDesactivados", $parameters);
 			}
 		}
-		
 		
 		$parameters = [
 			"title" => "Usuarios-inactivos",
@@ -254,10 +289,10 @@ class Usuarios extends MainController
 			"usuario" => $usuario,
 			"idActivar"=> $idActivar,
 			"totalArticulos" => $totalArticulos,
+			'realizado' => $realizado
 			
 		];
 		
-	
 		$this->view("usuarios/usuariosDesactivados", $parameters);
 	}
 }

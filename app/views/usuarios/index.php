@@ -1,4 +1,12 @@
 <?php require_once('../app/views/inc/header.php'); ?>
+
+<?php if ( $parameters['realizado'] == true) {
+   $var = isset($parameters['realizado'])?$parameters['realizado']: $_GET['realizado'];
+
+   echo $var;
+ 
+}?>
+
 <!-- <?php echo $parameters['idEliminar']?> -->
 <table>
     <thead>
@@ -10,7 +18,7 @@
                         <?php echo $parameters['totalArticulos']." Registros"?>
                     </p>
                     <p>
-                        <?php if ((isset($parameters['busqueda']) && $parameters['busqueda'] != '') || (isset($parameters['tipousario']) && $parameters['tipousario'] != '')):?>
+                    <?php if (((isset($parameters['busqueda']) and $parameters['busqueda'] != '') || count($parameters['usuarios']) == 0)):?>
                         <a href="<?php echo ROUTE_URL?>/usuarios" class="btn-editar"><i
                                 class="fas fa-redo"></i>Recargar</a>
                         <?php endif?>
@@ -39,7 +47,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php if( !isset($parameters['usuarios']) or !$parameters['usuarios']):?>
+    <?php if( !isset($parameters['usuarios']) or !$parameters['usuarios'] or count($parameters['usuarios']) == 0):?>
         <tr>
             <td data-label="error">
                 ---
@@ -111,11 +119,12 @@
 <section class="paginacion">
     <ul>
         <!-- // bloqueando el boton retroceso -->
-        <?php if ($parameters['pagina'] == 1 and count($parameters['usuarios'])  !=0):?>
+         <!-- // bloqueando el boton retroceso -->
+         <?php if ($parameters['pagina'] == 1 and count($parameters['usuarios']) != 0):?>
         <li class="disabled">&laquo;</li>
-        <?php elseif ($parameters['pagina'] > 1 and count($parameters['usuarios']) != 0):?>
+        <?php elseif ($parameters['pagina'] > 1):?>
         <a class="inicio"
-            href="?pagina=<?php echo $parameters['pagina'] - 1?><?php echo $var=(isset($parameters['busqueda']))?'&busqueda='.$parameters['busqueda']:''?>">&laquo;</a>
+            href="?pagina=<?php echo $parameters['pagina'] - 1?>&busqueda=<?php echo $var = (isset($parameters['busqueda']))? $parameters['busqueda'] : ''?><?php echo $var=(isset($parameters['fechanacimiento']))?'&fechanacimiento='.$parameters['fechanacimiento']:''?><?php echo $var=(isset($parameters['fecharegistro']))?'&fecharegistro='.$parameters['fecharegistro']:''?><?php echo $var=(isset($parameters['tipousario']))?'&tipousario='.$parameters['tipousario']:''?><?php echo $var=(isset($parameters['sexo']))?'&sexo='.$parameters['sexo']:''?>">&laquo;</a>
         <?php endif;?>
 
         <!-- Estableciendo numero de paginas -->
@@ -139,12 +148,12 @@
         <?php endif?>
 
         <?php endfor;?>
-        <!-- bloqueando el boton de siguiente cuando se llega a la ultima pagina -->
-        <?php if ($parameters['pagina'] == $parameters['numeroPaginas'] and count($parameters['usuarios']) != 0):?>
+          <!-- bloqueando el boton de siguiente cuando se llega a la ultima pagina -->
+          <?php if ($parameters['pagina'] == $parameters['numeroPaginas'] || (count($parameters['usuarios']) == 0 and $parameters['pagina'] != 1)):?>
         <li class="disabled">&raquo;</li>
-        <?php elseif($parameters['pagina'] < $parameters['numeroPaginas'] and count($parameters['usuarios']) != 0): ?>
+        <?php elseif($parameters['pagina'] < $parameters['numeroPaginas'] || (count($parameters['usuarios']) != 0 and $parameters['pagina'] != 1)): ?>
         <a class="fin"
-            href="?pagina=<?php echo $parameters['pagina'] + 1?><?php echo $var=(isset($parameters['busqueda']))?'&busqueda='.$parameters['busqueda']:''?>">&raquo;</a>
+            href="?pagina=<?php echo $parameters['pagina'] + 1?>&busqueda=<?php echo $var = (isset($parameters['busqueda']))? $parameters['busqueda'] : ''?><?php echo $var=(isset($parameters['fechanacimiento']))?'&fechanacimiento='.$parameters['fechanacimiento']:''?><?php echo $var=(isset($parameters['fecharegistro']))?'&fecharegistro='.$parameters['fecharegistro']:''?><?php echo $var=(isset($parameters['tipousario']))?'&tipousario='.$parameters['tipousario']:''?><?php echo $var=(isset($parameters['sexo']))?'&sexo='.$parameters['sexo']:''?>">&raquo;</a>
 
         <?php endif?>
     </ul>

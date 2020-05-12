@@ -1,59 +1,11 @@
 <?php require_once('../app/views/inc/header.php'); ?>
 
-<!-- <div class="" style="display: block; width: 20%">
-    <form action="<?php echo ROUTE_URL?>/usuarios/usuariosDesactivados" id="form-filtrar" class="form"  method="get">
-        
-        <div class="inputBox-1">
-            <div class="inputBox">
-                <label for="fechanacimiento">Fecha de Nacimiento</label>
-                <input type="date" id="input" name='fechanacimiento'>
-            </div>
-        </div>
-        <div class="inputBox-1">
-            <div class="inputBox">
-                <label for="fecharegistro">Fecha de Registro</label>
-                <input type="date" id="input" name='fecharegistro'>
-            </div>
-        
-        </div>
-        
-        <div class="inputBox-1">
-            
-            <div class="inputBox">
-                <div class="check">
-                    <label for="tipousario">Tipo Usuario</label>
-                    <br>
-                    <select name="tipousario" id="input">
-                        <option value="1">Administrador</option>
-                        <option value="2">Estandar</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="inputBox-1">
-            
-            <div class="inputBox">
-                <div class="check">
-                    <label for="sexo">Sexo</label>
-                    <br>
-                    <select name="sexo" id="input">
-                        <option value="1">Hombre</option>
-                        <option value="2">Mujer</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+<?php if ( $parameters['realizado'] == true) {
+   $var = isset($parameters['realizado'])?$parameters['realizado']: $_GET['realizado'];
 
-        
-        <div class="inputBox-1">
-            <div class="boton">
-                
-                <input type="submit" name="submit" value="Filtrar">
-            </div>
-        </div>
-    </form>
-</div> -->
-
+   echo $var;
+ 
+}?>
 <table>
     <thead>
         <tr>
@@ -63,7 +15,7 @@
                     <p>Lista de usuarios desactivados. Se encontraron
                         <?php echo $parameters['totalArticulos']." Registros"?></p>
                     <p>
-                        <?php if (((isset($parameters['busqueda']) and $parameters['busqueda'] != '') and count($parameters['usuarios']) != 0) || (isset($parameters['tipousario']) && $parameters['tipousario'] != '')):?>
+                        <?php if (((isset($parameters['busqueda']) and $parameters['busqueda'] != '') || count($parameters['usuarios']) == 0)):?>
                         <a href="<?php echo ROUTE_URL?>/usuarios/usuariosDesactivados" class="btn-editar"><i
                                 class="fas fa-redo"></i>Recargar</a>
                         <?php endif?>
@@ -89,7 +41,7 @@
     </thead>
     <!-- si no se encuentra ningun registro -->
     <tbody>
-        <?php if( !isset($parameters['usuarios']) or !$parameters['usuarios']):?>
+        <?php if( !isset($parameters['usuarios']) or !$parameters['usuarios'] or count($parameters['usuarios']) == 0):?>
         <tr>
             <td data-label="error">
                 ---
@@ -158,9 +110,9 @@
 <section class="paginacion">
     <ul>
         <!-- // bloqueando el boton retroceso -->
-        <?php if ($parameters['pagina'] == 1 and count($parameters['usuarios'])  !=0):?>
+        <?php if ($parameters['pagina'] == 1 and count($parameters['usuarios']) != 0):?>
         <li class="disabled">&laquo;</li>
-        <?php elseif ($parameters['pagina'] > 1 and count($parameters['usuarios']) != 0):?>
+        <?php elseif ($parameters['pagina'] > 1):?>
         <a class="inicio"
             href="?pagina=<?php echo $parameters['pagina'] - 1?>&busqueda=<?php echo $var = (isset($parameters['busqueda']))? $parameters['busqueda'] : ''?><?php echo $var=(isset($parameters['fechanacimiento']))?'&fechanacimiento='.$parameters['fechanacimiento']:''?><?php echo $var=(isset($parameters['fecharegistro']))?'&fecharegistro='.$parameters['fecharegistro']:''?><?php echo $var=(isset($parameters['tipousario']))?'&tipousario='.$parameters['tipousario']:''?><?php echo $var=(isset($parameters['sexo']))?'&sexo='.$parameters['sexo']:''?>">&laquo;</a>
         <?php endif;?>
@@ -186,9 +138,9 @@
 
         <?php endfor;?>
         <!-- bloqueando el boton de siguiente cuando se llega a la ultima pagina -->
-        <?php if ($parameters['pagina'] == $parameters['numeroPaginas'] and count($parameters['usuarios']) != 0):?>
+        <?php if ($parameters['pagina'] == $parameters['numeroPaginas'] || (count($parameters['usuarios']) == 0 and $parameters['pagina'] != 1)):?>
         <li class="disabled">&raquo;</li>
-        <?php elseif($parameters['pagina'] < $parameters['numeroPaginas'] and count($parameters['usuarios']) != 0): ?>
+        <?php elseif($parameters['pagina'] < $parameters['numeroPaginas'] || (count($parameters['usuarios']) != 0 and $parameters['pagina'] != 1)): ?>
         <a class="fin"
             href="?pagina=<?php echo $parameters['pagina'] + 1?>&busqueda=<?php echo $var = (isset($parameters['busqueda']))? $parameters['busqueda'] : ''?><?php echo $var=(isset($parameters['fechanacimiento']))?'&fechanacimiento='.$parameters['fechanacimiento']:''?><?php echo $var=(isset($parameters['fecharegistro']))?'&fecharegistro='.$parameters['fecharegistro']:''?><?php echo $var=(isset($parameters['tipousario']))?'&tipousario='.$parameters['tipousario']:''?><?php echo $var=(isset($parameters['sexo']))?'&sexo='.$parameters['sexo']:''?>">&raquo;</a>
 
