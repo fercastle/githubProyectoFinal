@@ -50,7 +50,7 @@ a{
 .header{
     /* Para el area que abarcara el header todo el espacio */
     grid-area: header;
-    padding: 0 20px;
+    padding: 0 25px;
     display: grid;
     /* Dividir tres columnas */
     grid-template-columns: auto 1fr auto;
@@ -61,11 +61,13 @@ a{
     grid-gap: 20px;
     /* Creando las areas */
     grid-template-areas: "logo busqueda iconos";
+    background: #313545;
 }
 
 /* Estilos al boton menu */
 .header .contenedor-logo .boton-menu{
     border: none;
+    color: #fff;
     padding: 10px;
     background: none;
     cursor: pointer;
@@ -80,7 +82,10 @@ a{
 
 /* Para efecto de animacion al poner el mouse en el boton menu */
 .header .contenedor-logo .boton-menu:hover{
-    background: #e7e7e7;
+
+    background: #e5e5e5;
+    color: #000000;
+
 }
 
 /* Estilos al logo del minsal */
@@ -116,26 +121,48 @@ a{
     padding: 0 15px;
     height: 35px;
     line-height: 35px;
-    border: 1px solid #cccccc;
+    border: 1px solid #fff;
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
+    -webkit-border-top-left-radius: 50px;
+    -webkit-border-bottom-left-radius: 50px;
+    -moz-border-radius-topleft: 50px;
+    -moz-border-radius-bottomleft: 50px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+.header .barra-busqueda form input:hover {
+    border: 1px solid #fff;
+    
 }
 
 /* Estilos para el boton de busqueda */
 .header .barra-busqueda form button{
     height: 35px;
-    border: 1px solid #cccccc;
+    border: 1px solid #e5e5e5;
+    box-shadow: 1px 1px 1px #313545;
     border-left: none;
-    color: #545454;
-    background: #f8f8f8;
+    color: #1236da;
+    background: #e5e5e5;
+    
     padding: 0 25px;
     cursor: pointer;
     outline:none;
+    -webkit-border-top-right-radius: 50px;
+    -webkit-border-bottom-right-radius: 50px;
+    -moz-border-radius-topright: 50px;
+    -moz-border-radius-bottomright: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
 }
 
 /* Para efecto al boton de busqueda cuando se pase el cursor */
 .header .barra-busqueda button:hover{
-    background: #e6d8d8;
+    background: #1236da;
+    border: 1px solid #1236da;
+	color: white;
+	box-shadow: 1px 4px 5px #0a2394;
 }
 
 /* Estilo para los iconos */
@@ -174,13 +201,14 @@ a{
     font-size: 18px;
     padding: 7px 12px;
     border-radius: 100px;
-    color: #828282;
+    color: #ffff;
     margin-right: 20px;
     cursor: pointer;
     outline:none;
 }
 /* Para efecto al pasar el cursor */
 .header .botones-header button:hover{
+    color: #000;
     background: #e7e7e7;
 }
 
@@ -188,9 +216,10 @@ a{
 /* Estilos al menu para sombra en la barra lateral */
 nav{
     width: 250px;
-    padding: 10px 10px 20px 10px;
+    padding: 10px 10px 20px 5px;
     background-color: white;
     box-shadow: 10px 10px 5px #aaaaaa;
+    border-right: 1px solid #000000;
 
 }
 .menu-lateral{
@@ -198,6 +227,7 @@ nav{
     background: #ffffff;
     /* Para poder acomodar el texto del menu lateral y poder dar un ancho minimo */
     overflow: hidden;
+  
 }
 
 .menu-lateral a{
@@ -231,10 +261,11 @@ nav{
 }
 /* Para estilos de los iconos del menu lateral */
 .menu-lateral .fas{
-    color: #606060;
+    color: #313545;
     margin-right: 35px;
     width: 20px;
     text-align: center;
+    font-size: 18px;
 }
 /* Cuando este activo el icono cambie a otro color */
 .menu-lateral a.active .fas{
@@ -242,6 +273,9 @@ nav{
 }
 
 .main{
+    
+    padding-top: 20px;
+    
     grid-area: contenido;
     background: #ffffff;
 }

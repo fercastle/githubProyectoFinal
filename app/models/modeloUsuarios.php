@@ -10,14 +10,13 @@
         }
 
         // obteniendo todos los registros
-        //  tabla usuarios
         public function obtenerUsuarios(){
 
             $this->db->query("SELECT * FROM usuarios");
 
             return $this->db->registers();
         }
-
+        
         public function optenerUsuario($id){
             $this->db->query(
                 "SELECT nombreusuario, 
@@ -58,7 +57,7 @@
             return $this->db->rowCount();
 
         }
-
+        
         public function obtnerUsuariosBusquedaNombre($busqueda, $inicio, $numeroPaginas){
             $this->db->query(
                 "SELECT * FROM usuarios
@@ -71,6 +70,35 @@
                 ");
             return $this->db->registers();
         }
+
+
+        public function TotalPaginacionUsuariosBusquedaNombreDes($busqueda){
+            
+            $this->db->query(
+                "SELECT * FROM usuarios 
+                WHERE (LOWER(CONCAT(nombreusuario,' ',apellidousuario)) LIKE '$busqueda' OR
+                LOWER(CONCAT(apellidousuario,' ',nombreusuario)) LIKE '$busqueda'
+                )
+                AND estadousuario = 2     
+            ");
+            return $this->db->rowCount();
+
+        }
+        
+        public function obtnerUsuariosBusquedaNombreDes($busqueda, $inicio, $numeroPaginas){
+            $this->db->query(
+                "SELECT * FROM usuarios
+                WHERE( LOWER(CONCAT(nombreusuario,apellidousuario)) LIKE '$busqueda' OR
+                LOWER(CONCAT(apellidousuario,' ',nombreusuario)) LIKE '$busqueda'
+                )
+                AND estadousuario = 2
+                LIMIT $inicio, $numeroPaginas
+                -- ORDER BY nombreusuario DESC
+                ");
+            return $this->db->registers();
+        }
+
+
 
         public function obtnerUsuariosBusqueda($busqueda, $inicio, $numeroPaginas){
 

@@ -1,6 +1,5 @@
 <?php
 
-
 class Usuarios extends MainController
 {
 	
@@ -12,465 +11,236 @@ class Usuarios extends MainController
 		 $this->ModeloUsuarios = $this->model('ModeloUsuarios');
 	}
 
-	//index con paginacion hecha por " mi "
-	// public function index(){
+	public function nuevoUsuario(){
 
+		$parameters = [
+			'menu' => 'usuarios',
+			'title' => 'Nuevo Usuario',
+		];
+		$this->view('usuarios/nuevo_usuario', $parameters);
 
-	// 	$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-
-
-	// 	//Definicendo el numero de paginas a mostrar
-
-	// 	// $postPorPagina = 3;
-
-	// 	$_SESION['postPorPagina'] = isset($_GET['postPorPagina']) ? (int)$_GET['postPorPagina'] : 3;
-
-	// 	// if ($_SESION['postPorPagina'] != 3 and $pagina == 1) {
-		
-	// 	// 	$_SESION['postPorPaginaFinal'] = $_SESION['postPorPagina'];
-	// 	// }
-	// 	// if (!isset($_GET['postPorPagina']) and $pagina != 3) {
-
-	// 	// 	$_SESION['postPorPagina'] = $_SESION['postPorPaginaFinal'];
-	// 	// }
-		
-	// 	// print_r($_SESION['postPorPagina']);
-	// 	// print_r($_SESION['postPorPaginaFinal']);
-		
-	// 	$postPorPagina = $_SESION['postPorPagina'];
-	// 	$inicio = ($pagina > 1) ? ($pagina * $postPorPagina - $postPorPagina) : 0;
-
-
-	// 	// $usuarios = $this->ModeloUsuarios->obtenerUsuarios();
-
-	// 	$usuarios = $this->ModeloUsuarios->optenerUsuriosPost($inicio, $postPorPagina);
-
-		
-		
-		
-	// 	if (!$usuarios) {
-	// 		header('location:'.ROUTE_URL.'/usuarios/index');
-	// 	}
-		
-	// 	$totalArticulos = $this->ModeloUsuarios->TotalPaginacion();
-		
-	// 	// echo $totalArticulos;
-	// 	$numeroPaginas = ceil($totalArticulos / $postPorPagina);
-		
-	// 	//tamano de las filas totales
-	
-
-	// 	$final = ($pagina + 1) * $postPorPagina - $postPorPagina;
-		
-	// 	$numeroId = range($inicio, $final);
-
-	// 	for ($i=0; $i < count($usuarios); $i++){
-
-	// 		$edad = calcularEdad($usuarios[$i]->fechanacimientousuario);
-
-	// 		$usuarios[$i]->fechanacimientousuario = $edad;
-
-	// 	}
-
-	// 	$parameters = [
-	// 		'title' => 'Bienvenidos a mi sitio web',
-	// 		'menu' => 'usuarios',
-	// 		'pagina' => $pagina,
-	// 		'numPag' => $numeroPaginas,
-	// 		'usuarios' => $usuarios,
-	// 		'numeroId' => $numeroId,
-	// 		'postPorPagina' => $postPorPagina
-	// 	];
-		
-	// 	$this->view("usuarios/index", $parameters);
-	// }
-
-	// public function editar($id = 1){
-	
-	// 	$usuario = $this->ModeloUsuarios->optenerUsuario($id);
-
-	// 	if ( !$usuario ) {
-
-	// 		header("location:".ROUTE_URL."/usuarios");
-	// 	}
-		
-
-	// }
-
+	}
 	public function index(){
-
-		// para la busqueda verificansdo si se envio por el metodo POS o GET
-		$idEdit = null;
-		$idEliminar = null;
-		$busqueda = null;
-		$usuario = null;
-		$fechanacimiento = null;
-		$fecharegistro = null;
-		$tipousario = null;
-		$sexo = null;
 	
-		// Guardando la busqueda
-		if (isset($_GET['busqueda'])) {
-			// convirtiendo a minusculas
-			$busqueda = strtolower($_GET['busqueda']);
-		}elseif(isset($_POST['busqueda'])){
-			// convirtiendo a minusculas
-			$busqueda = strtolower($_POST['busqueda']);
-		}
-		
-		//Para editar
-		if (isset($_GET['editar']) and $_GET['editar'] != 0) {
-
-			$idEdit = $_GET['editar'];
-
-			$usuario = $this->ModeloUsuarios->obtenerUsuario($idEdit);
-
-			if (!$usuario) {
-				header("location:".ROUTE_URL."usuarios/index");
-			}
-		}
+		// ruta de este controllador para manejar la busqueda
+		$rutaContrBusqueda = ROUTE_URL.'/usuarios';
+		$busqueda = null;
+		$idEliminar = null;
+		$usuario = null;
+		//variable que optiene el id del registro a eliminar
+							
 		//Para eliminar un registro
-		elseif(isset($_GET['eliminar']) and $_GET['eliminar'] != 0){
+		if(isset($_GET['eliminar']) and $_GET['eliminar'] != 0){
 			$idEliminar = $_GET['eliminar'];
 			$usuario = $this->ModeloUsuarios->obtenerUsuario($idEliminar);
 			if (!$usuario) {
 				header("location:".ROUTE_URL."usuarios/index");
 			}
+		}elseif (isset($_GET['id']) and $_GET['id'] != 0) {
+			
+			$this->ModeloUsuarios->desactivar($_GET['id']);
+			
 		}
 
-		$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-
-		// numero de registros a mostrar por pagina
-		$postPorPagina = 10;
-
-		// guardando ultimo registro de cada pagina
-		$inicio = ($pagina > 1) ? ($pagina * $postPorPagina - $postPorPagina) : 0;
-
-		//Buscando los registros 
-		if (($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET') and ($busqueda != null or $busqueda != '')) {
-			
-			$busqueda = sanitize($busqueda);
-			
-			// Verificando si existe algun espacio dentro de la busqueda
-			if (strpos($busqueda, ' ') !== false) {
 		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['busqueda']) and $_POST['busqueda'] != '')  {
+			
+		
+			$busqueda = sanitize(strtolower($_POST['busqueda']));
+
+		}
+		elseif ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['busqueda']) and $_GET['busqueda'] != '') {
+
+			$busqueda = sanitize(strtolower($_GET['busqueda']));
+
+		}
+
+		$cantElementPorPag = 10;
+
+		$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+	
+		$inicio = ($pagina > 1) ? $pagina * $cantElementPorPag - $cantElementPorPag : 0;
+
+		if ($busqueda != null) {
+			
+		// // Verificando si existe algun espacio dentro de la busqueda
+			if (strpos($busqueda, ' ') == true) {
+				
 				$busquedaNombre = explode(' ', $busqueda);
 				
-				// agregando los %% a cada elemento del arreglo
+		// 		// agregando los %% a cada elemento del arreglo
 				for($i = 0; $i < count($busquedaNombre); $i++){
 					$busquedaNombre[$i] = '%'.$busquedaNombre[$i].'%';
 				}
-				// convirtiendo el arreglo a str
+		// 		// convirtiendo el arreglo a str
 				$busquedaNombre = implode($busquedaNombre);
 				
 				$totalArticulos = $this->ModeloUsuarios->TotalPaginacionUsuariosBusquedaNombre($busquedaNombre);
 
-				$usuarios = $this->ModeloUsuarios->obtnerUsuariosBusquedaNombre($busquedaNombre, $inicio, $postPorPagina);
-			}else{
-
+				$usuarios = $this->ModeloUsuarios->obtnerUsuariosBusquedaNombre($busquedaNombre, $inicio, $cantElementPorPag);
+		
+			}
+			else {
+				
 				$totalArticulos = $this->ModeloUsuarios->TotalPaginacionUsuariosBusqueda($busqueda);
 
-				$usuarios = $this->ModeloUsuarios->obtnerUsuariosBusqueda($busqueda, $inicio, $postPorPagina);
-			}
-			
-		
+				$usuarios = $this->ModeloUsuarios->obtnerUsuariosBusqueda($busqueda, $inicio, $cantElementPorPag);
+
 		}
-		//filtros de busqueda 
-		elseif($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['submit']) || isset($_GET['tipousario']) && $_GET['tipousario'] != ''){
-			if ($_GET['sexo'] != '') {
-				
-				$fechanacimiento = sanitize($_GET['fechanacimiento']);
-				$fecharegistro = sanitize($_GET['fecharegistro']);
-				$tipousario = sanitize($_GET['tipousario']);
-				$sexo = sanitize($_GET['sexo']);	
-			}
-										 
-			$usuarios = $this->ModeloUsuarios->obtenerUsuariosFiltro($fechanacimiento, $fecharegistro, $tipousario, $sexo, $inicio, $postPorPagina);
-			$totalArticulos = $this->ModeloUsuarios->totalPaginacionFiltro($fechanacimiento, $fecharegistro, $tipousario, $sexo);
-		
 		}
-		// obteniendo todos los registros 
 		else{
 
-			// Registros devueltos para esta pagina 
-			$usuarios = $this->ModeloUsuarios->optenerUsuriosPost($inicio, $postPorPagina);
-
-			//obteniendo el total de paginas
+			//obteniendo rango de registro por pagina son los registros
+			$usuarios = $this->ModeloUsuarios->optenerUsuriosPost($inicio, $cantElementPorPag);
+			
+			//obteniendo el total de registros de la tabla
 			$totalArticulos = $this->ModeloUsuarios->TotalPaginacion();
-			
-		}
-		
-		$numeroPaginas = ceil($totalArticulos / $postPorPagina);
-
-		if (!$usuarios) {
-			
-			$busqueda = 'No hay conincidencias';
 		}
 
-		// transformando las fechas a formato de edad 
-		for ($i=0; $i < count($usuarios) ; $i++) { 
-			
-			$edad = calcularEdad($usuarios[$i]->fechanacimientousuario);
+		// obtener formato de edad de 1990-04-19 a 30
+		$usuarios = formatoEdad($usuarios);
 
-			$usuarios[$i]->fechanacimientousuario = $edad;	
-		}
+		// Numero de paginas
+		$numeroPaginas = ceil($totalArticulos / $cantElementPorPag);
 
-		// obtener numeracion de registros
-		$numeroFinalRegistro = ($pagina + 1) * $postPorPagina - $postPorPagina;
-		$numeroRegistro = range($inicio, $numeroFinalRegistro);
-		
-		$parameters = [
-			"title" => "Usuarios-activos",
-			"menu" => "usuarios",
-			"usuarios" => $usuarios,
-			"numeroPaginas" => $numeroPaginas,
-			"pagina" => $pagina,
-			"numeroRegistro" => $numeroRegistro,
-			"busqueda" => $busqueda,
-			"usuario" => $usuario,
-			"idEdit" => $idEdit,
-			"idEliminar"=> $idEliminar,
-			"totalArticulos" => $totalArticulos,
-			"fechanacimiento" => $fechanacimiento,
-			"fecharegistro" => $fecharegistro,
-			"tipousario" => $tipousario,
-			"sexo" => $sexo
+		//rango final para el id
+		$finNumId =  ($pagina + 1) * $cantElementPorPag - $cantElementPorPag;
 
-		];
+		//capturando los rangos del id
+		$numIds = range($inicio, $finNumId);
 	
-		$this->view("usuarios/usuarios", $parameters);
-
-	}
-
-	public function desactivar($id){
-		
-		if ($id != 0) { 
-		
-			$usuario = $this->ModeloUsuarios->desactivar($id);
-			if(!$usuario){
-				header("location:".ROUTE_URL."/usuarios/usuarios");
-			}else{
-				header("location:".ROUTE_URL."/usuarios/usuarios");
-			}
-		}
-		
-	}
-
-	public function activar($id){
-		
-		if ($id != 0) { 
-		
-			$usuario = $this->ModeloUsuarios->activar($id);
-			if(!$usuario){
-				header("location:".ROUTE_URL."/usuarios/usuariosDesactivados");
-			}else{
-				header("location:".ROUTE_URL."/usuarios/usuariosDesactivados");
-			}
-		}
-		
-	}
-
-	public function editar($id){
-
-		$usuario = $this->ModeloUsuarios->obtenerUsuario($id);
-
-		if (!$usuario) {
-			header("location:".ROUTE_URL."usuarios/index");
-		}
-
 		$parameters = [
+			//numero de paginas para la paginacion
+			'numeroPaginas' => $numeroPaginas,
+			'numIds' => $numIds,
 			'menu' => 'usuarios',
-			'usuario' => $usuario
-		];
-
-		$this->view('usuarios/usuarios', $parameters);
-	}
-
-	// public function index(){
-
-	// 	$usuarios = $this->ModeloUsuarios->obtenerUsuarios();
-
-	// 	if (!$usuarios) {
-	// 		header('location:'.ROUTE_URL.'/index/index');
-	// 	}
-
-	// 	for($i = 0; $i < count($usuarios); $i++){
-
-	// 		$edad = calcularEdad($usuarios[$i]->fechanacimientousuario);
-
-	// 		$usuarios[$i]->fechanacimientousuario = $edad;
-	// 	}
-
-	// 	$parameters = [
-	// 		'title' => 'Listado de Usuarios',
-	// 		'menu' => 'usuarios',
-	// 		'usuarios' => $usuarios,
-	// 	];
-
-	// 	$this->view("usuarios/index", $parameters);
-		
-
-	// }
-
-	public function busqueda(){
-
-
-		$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-
-		$postPorPagina = 3;
-
-		$inicio = ($pagina > 1) ? ($pagina * $postPorPagina - $postPorPagina) : 0;
-
-		$busqueda = strtolower($_REQUEST['busqueda']);
-
-		if (empty($busqueda)) {
-			header("location:".ROUTE_URL."/usuarios");
-		}
-		
-		$usuarios = $this->ModeloUsuarios->obtnerPaginacionUsuariosBusqueda($busqueda, $inicio, $postPorPagina);
-		
-
-		if (!$usuarios) {
-			$parameters = [
-				'title' => 'Bienvenidos a mi sitio web',
-				'menu' => 'usuarios',
-				'usuarios' => $usuarios,
-				'busqueda' => $busqueda
-			];
-			$this->view("usuarios/busqueda", $parameters);
-			// header('location:'.ROUTE_URL.'/usuarios/busqueda');
-		}
-
-		$totalArticulos = $this->ModeloUsuarios->TotalPaginacionUsuariosBusqueda($busqueda);
-
-		$numeroPaginas = ceil($totalArticulos / $postPorPagina);
-
-		$final = ($pagina + 1) * $postPorPagina - $postPorPagina;
-		
-		$numeroId = range($inicio, $final);
-
-	
-		$usuarios1 = array();
-		for ($i=0; $i < count($usuarios); $i++){
-
-			$edad = calcularEdad($usuarios[$i]->fechanacimientousuario);
-			$usuarios[$i]->fechanacimientousuario = $edad;
-			
-			if(is_numeric($busqueda) && strlen($busqueda) <= 2){
-				
-				$busqueda = (int)$busqueda;
-
-				echo var_dump($busqueda);
-				echo var_dump($edad);
-				die();
-				if ($edad == $busqueda) {
-					$usuarios1 = array_push($usuarios[$i]);
-					print_r($usuarios1);
-					die();
-				}
-			}
-		}
-
-		
-	
-		
-		$parameters = [
-			'title' => 'Bienvenidos a mi sitio web',
-			'menu' => 'usuarios',
-			'pagina' => $pagina,
-			'numPag' => $numeroPaginas,
+			'title' => 'UCSF',
+			'usuario' => $usuario,
 			'usuarios' => $usuarios,
-			'numeroId' => $numeroId,
-			'postPorPagina' => $postPorPagina,
-			'busqueda' => $busqueda
+			'pagina' => $pagina,
+			'busqueda' => $busqueda,
+			'rutaContrBusqueda' => $rutaContrBusqueda,
+			'totalArticulos' => $totalArticulos,
+			'idEliminar' => $idEliminar
 		];
 
-		$this->view("usuarios/busqueda", $parameters);
-	}
+		$this->view('usuarios/index', $parameters);
+
+	
+}
+
 
 
 	public function usuariosDesactivados(){
 		
-		$idActivar = null;
+		$rutaContrBusqueda = ROUTE_URL.'/usuarios/usuariosDesactivados';
 		$busqueda = null;
 		$usuario = null;
-		$fechanacimiento = null;
-		$fecharegistro = null;
-		$tipousario = null;
-		$sexo = null;
-
-		//si se esta haciendo una busqueda
-		if (isset($_GET['busqueda'])) {
-			$busqueda = strtolower($_GET['busqueda']);
-		}elseif(isset($_POST['busqueda'])){
-			$busqueda = strtolower($_POST['busqueda']);
-		}
-
-		//si se esta reactivando
+		$idActivar = null;
+		// // numero de registros a mostrar por pagina
+		$cantElementPorPag = 11;
+		//Para activar un registro
 		if(isset($_GET['activar']) and $_GET['activar'] != 0){
 			$idActivar = $_GET['activar'];
+						
 			$usuario = $this->ModeloUsuarios->obtenerUsuario($idActivar);
+
 			if (!$usuario) {
-				header("location:".ROUTE_URL."usuarios/usuariosDesactivados");
+				header("location:".ROUTE_URL."/usuarios/usuariosDesactivados");
 			}
+			//recarga a la pagina inicial si se activo el ultimo registro de la paginacion
+			
+
+		}else if (isset($_GET['id']) and $_GET['id'] != 0) {
+			
+			$this->ModeloUsuarios->activar($_GET['id']);
+		
 		}
 		
+		
+	
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['busqueda']) and $_POST['busqueda'] != '')  {
+			
+		
+			$busqueda = sanitize(strtolower($_POST['busqueda']));
+
+		}
+		elseif ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['busqueda']) and $_GET['busqueda'] != '') {
+
+			$busqueda = sanitize(strtolower($_GET['busqueda']));
+
+		}
+
+
 		$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 
-		// numero de registros a mostrar por pagina
-		$postPorPagina = 10;
-
-		// guardando ultimo registro de cada pagina
-		$inicio = ($pagina > 1) ? ($pagina * $postPorPagina - $postPorPagina) : 0;
-
-		//lo que se busca 
-		if (($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET') and ($busqueda != null or $busqueda != '')) {
-
-			$busqueda = sanitize($busqueda);
-	
-			$totalArticulos = $this->ModeloUsuarios->TotalPaginacionUsuariosBusquedaDes($busqueda);
-			$usuarios = $this->ModeloUsuarios->obtnerPaginacionUsuariosBusquedaDes($busqueda, $inicio, $postPorPagina);
 		
-		}//filtros de busqueda 
-		elseif($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['submit']) || isset($_GET['tipousario']) && $_GET['tipousario'] != ''){
-			if ($_GET['sexo'] != '') {
+
+		// // guardando ultimo registro de cada pagina
+		$inicio = ($pagina > 1) ? ($pagina * $cantElementPorPag - $cantElementPorPag) : 0;
+
+		if ($busqueda != null) {
+			
+			// // Verificando si existe algun espacio dentro de la busqueda
+			//tipo de busqueda nombre y apellido, apellido y nombre
+				if (strpos($busqueda, ' ') == true) {
 				
-				$fechanacimiento = sanitize($_GET['fechanacimiento']);
-				$fecharegistro = sanitize($_GET['fecharegistro']);
-				$tipousario = sanitize($_GET['tipousario']);
-				$sexo = sanitize($_GET['sexo']);	
-			}
-										 
-			$usuarios = $this->ModeloUsuarios->obtenerUsuariosFiltroDes($fechanacimiento, $fecharegistro, $tipousario, $sexo, $inicio, $postPorPagina);
-			$totalArticulos = $this->ModeloUsuarios->totalPaginacionFiltroDes($fechanacimiento, $fecharegistro, $tipousario, $sexo);
-		
+					$busquedaNombre = explode(' ', $busqueda);
+					
+			// 		// agregando los %% a cada elemento del arreglo
+					for($i = 0; $i < count($busquedaNombre); $i++){
+						$busquedaNombre[$i] = '%'.$busquedaNombre[$i].'%';
+					}
+			// 		// convirtiendo el arreglo a str
+					$busquedaNombre = implode($busquedaNombre);
+					
+					
+					$totalArticulos = $this->ModeloUsuarios->TotalPaginacionUsuariosBusquedaNombreDes($busquedaNombre);
+	
+					$usuarios = $this->ModeloUsuarios->obtnerUsuariosBusquedaNombreDes($busquedaNombre, $inicio, $cantElementPorPag);
+			
+				}
+				//tipo de busqueda nombre o apellido
+				else {
+					
+					$totalArticulos = $this->ModeloUsuarios->TotalPaginacionUsuariosBusquedaDes($busqueda);
+	
+					$usuarios = $this->ModeloUsuarios->obtnerPaginacionUsuariosBusquedaDes($busqueda, $inicio, $cantElementPorPag);
+	
+				}
 		}
-		
+		//todos los registros sin busqueda
 		else{
-
-			$usuarios = $this->ModeloUsuarios->optenerUsuriosPostDes($inicio, $postPorPagina);
-
+				
+				//obteniendo el total de registros de la tablacantElementPorPag
 			$totalArticulos = $this->ModeloUsuarios->TotalPaginacionDes();
 			
+				//obteniendo rango de registro por pagina son los registros
+			$usuarios = $this->ModeloUsuarios->optenerUsuriosPostDes($inicio, $cantElementPorPag);
+				
 		}
+	
 		
-		$numeroPaginas = ceil($totalArticulos / $postPorPagina);
+		$numeroPaginas = ceil($totalArticulos / $cantElementPorPag);
 
 		if (!$usuarios) {
 			
 			$busqueda = 'No hay conincidencias';
 		}
 
-		for ($i=0; $i < count($usuarios) ; $i++) { 
-			
-			$edad = calcularEdad($usuarios[$i]->fechanacimientousuario);
+		// obtener formato de edad de 1990-04-19 a 30
+			$usuarios = formatoEdad($usuarios);
 
-			$usuarios[$i]->fechanacimientousuario = $edad;	
-		}
-
-		// obtener numeracion de registros
-		$numeroFinalRegistro = ($pagina + 1) * $postPorPagina - $postPorPagina;
+		// // obtener numeracion de registros
+		$numeroFinalRegistro = ($pagina + 1) * $cantElementPorPag - $cantElementPorPag;
 		$numeroRegistro = range($inicio, $numeroFinalRegistro);
+
+		if (isset($_GET['id']) and $_GET['id'] != 0) {
+			if ((isset($_GET['totalArticulos']) and $_GET['totalArticulos'] == 1) || ($cantElementPorPag ==  $_GET['totalArticulos'] - 1) || count($usuarios) == 1) {
+				header("location:".ROUTE_URL."/usuarios/usuariosDesactivados");
+			}
+		}
+		
 		
 		$parameters = [
 			"title" => "Usuarios-inactivos",
@@ -480,15 +250,14 @@ class Usuarios extends MainController
 			"pagina" => $pagina,
 			"numeroRegistro" => $numeroRegistro,
 			"busqueda" => $busqueda,
+			"rutaContrBusqueda" => $rutaContrBusqueda,
 			"usuario" => $usuario,
 			"idActivar"=> $idActivar,
 			"totalArticulos" => $totalArticulos,
-			"fechanacimiento" => $fechanacimiento,
-			"fecharegistro" => $fecharegistro,
-			"tipousario" => $tipousario,
-			"sexo" => $sexo
+			
 		];
-
+		
+	
 		$this->view("usuarios/usuariosDesactivados", $parameters);
 	}
 }
