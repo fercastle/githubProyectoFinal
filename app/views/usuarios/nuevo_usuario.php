@@ -3,7 +3,7 @@
 
     <div class="caja">
         <div class="titulo">
-            <h3>Registro de Usuario</h3>
+            <h3>Usuario</h3>
             <i class="fa fa-user-plus" aria-hidden="true"></i>
         </div>
         <form action="" id="form-usuario" class="form">
