@@ -111,7 +111,6 @@ class Usuarios extends MainController
 		$numIds = range($inicio, $finNumId);
 
 		// si no encuentra ningun usuario se va a la pagina principal
-		
 			
 		if (isset($_GET['id']) and $_GET['id'] != 0) {
 			

@@ -12,6 +12,7 @@
         function index(){
 
             $parameters = [
+                'title'=> 'Pagina de inicio',
                 'menu' => 'Inicio',
                 'lista'=> 'Lista de Manipuladores'
             ];
