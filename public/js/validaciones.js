@@ -1,6 +1,8 @@
-
-
+(function(){
+//capturando el form
 const form = document.getElementById('form-usuario');
+
+//los inputs
 const nombre = document.getElementById('nombre');
 const fechaNacimiento= document.getElementById('fechaNacimiento');
 const apellido = document.getElementById('apellido');
@@ -129,16 +131,20 @@ function validarPassword2(){
 		setSuccessFor(password2);
 }
 
+//esta funcion es la que pone la clase error
 function setErrorFor(input, message) {
+	//parentElement nombre = div
 	const inputBox = input.parentElement;
 	const small = inputBox.querySelector('small');
 	inputBox.className = 'inputBox error';
 	small.innerText = message;
 }
 
+//cuando todo esta bien
 function setSuccessFor(input) {
 	const inputBox = input.parentElement;
 	inputBox.className = 'inputBox success';
 }
 
 
+}());

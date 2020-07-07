@@ -5,7 +5,7 @@
     class Index extends MainController{
 
         function __construct(){
-
+            sessionUser();
             $this->modeloUsuarios = $this->model('modeloUsuarios');
         }
 

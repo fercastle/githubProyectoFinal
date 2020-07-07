@@ -6,12 +6,14 @@
     <meta lang="es">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $parameters['title']?></title>
-    <link rel="stylesheet" href="<?php echo ROUTE_URL?>css/all.min.css">
+    <link rel="stylesheet" href="<?php echo ROUTE_URL?>/fontawesome/css/all.css">
+    
     <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/menu.css">
     <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/tabla.css">
     <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/paginacion.css">
     <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/formulario.css">
     <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/formularios.css">
+    
     
     <!-- <link rel="stylesheet" href="<?php echo ROUTE_URL?>/css/formularios.css"> -->
 
@@ -24,12 +26,12 @@
             <!-- Trabajando con el encabezado del archivo menu -->
             <header class="header">
                 <div class="contenedor-logo">
-                    <button id="boton-menu" class="boton-menu"><i class="fas fa-bars"></i></button>
+                    <button id="boton-menu" class="boton-menu"><span class="fas fa-bars"></span></button>
                     <a href="#" class="logominsal"><img src="<?php echo ROUTE_URL?>/img/minsal.png" alt="UCSF"></a>
                 </div>
 
                 <!-- dibujamos la barra de busqueda si estamos en usuarios -->
-                <?php if ($parameters['menu'] == 'usuarios' and $parameters['title'] != 'Nuevo Usuario' ):?>
+                <?php if (isset($parameters['rutaContrBusqueda'])):?>
 
                     <div class="barra-busqueda">
                         <form action="<?php echo $parameters['rutaContrBusqueda']?>" method="post" accept-charset="utf-8">
@@ -41,13 +43,9 @@
 
               <?php endif?>
 
-               
-
-
-
                 <div class="botones-header">
-                    <button><i class="fas fa-bell"></i></button>
-                    <a href="#" class="icono"><i class="fas fa-clinic-medical"></i><span>UCSF</span></a>
+                <p class="menuCSS3"><a style="color: white; :hover{color : #000;}"href="<?php echo  ROUTE_URL?>/login/logout"><?php print_r($_SESSION['user']->username)?> <i class="fas fa-user"></i></a></p>
+                    
                 </div>
 
             </header>

@@ -12,14 +12,15 @@
                 </p>
                 <p>
                     <?php if ($parameters['busqueda'] != null):?>
-                        <a href="<?php echo ROUTE_URL?>/usuarios/usuariosDesactivados" class="btn-editar"><i
+                        <a href="<?php echo ROUTE_URL?>/usuarios" class="btn-editar"><i
                                 class="fas fa-redo"></i>Recargar</a>
                     <?php endif?>
-                        <!-- <a href="<?php echo ROUTE_URL?>/usuarios/nuevoUsuario" class="btn-ver"><i
+                        <a href="<?php echo ROUTE_URL?>/usuarios/nuevoUsuario" class="btn-ver"><i
                                 class="far fa-plus-square"></i>
                             Nuevo
-                            usuario</a> -->
-                        <a href="<?php echo ROUTE_URL?>/usuarios/index" class="btn-editar"><i class="fas fa-user-check"></i>Activos</a>
+                            usuario</a>
+                        <a href="<?php echo ROUTE_URL?>/usuarios/usuariosDesactivados" class="btn-desactivar"><i
+                                class="fas fa-user-slash"></i>Desactivados</a>
 
                 </p>
                 </div>
@@ -92,12 +93,12 @@
             </td>
             <td data-label="Opciones">
                 <!-- <a href="javascript:editarUsu()" class="btn-nuevo"><i class="far fa-edit"></i></a> -->
-                <a href="<?php echo ROUTE_URL?>/usuarios/verUsuario<?php echo $var=(isset($parameters['usuarios']))? '/'.$parameters['usuarios'][$i]->idusuario:''?>/2"
+                <a href="<?php echo ROUTE_URL?>/usuarios/verUsuario<?php echo $var=(isset($parameters['usuarios']))? '/'.$parameters['usuarios'][$i]->idusuario:''?>/1"
                     class="btn-ver"><i class="fas fa-eye"></i></a>
-                <!-- <a href="<?php echo ROUTE_URL?>/usuarios/index/?editar=<?php echo $parameters['usuarios'][$i]->idusuario?>&pagina=<?php echo $parameters['pagina']?>&busqueda=<?php echo $var = (isset($parameters['busqueda']))? $parameters['busqueda'] : ''?>"
-                    class="btn-editar"><i class="far fa-edit"></i></a> -->
-                <a href="<?php echo ROUTE_URL.'/usuarios/usuariosDesactivados'?>/<?php echo $parameters['respuesta']['pagina_actual']?><?php echo $var=(isset($parameters['usuarios']))? '/'.$parameters['usuarios'][$i]->idusuario:''?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.str_replace(' ', '_',$parameters['busqueda']): ''?>"
-                    class="btn-editar"><i class="fas fa-check-circle"></i></a>
+                <a href="<?php echo ROUTE_URL?>/usuarios/actualizarUsuario<?php echo $var=(isset($parameters['usuarios']))? '/'.$parameters['usuarios'][$i]->idusuario:''?>"
+                    class="btn-editar"><i class="far fa-edit"></i></a>
+                <a href="<?php echo ROUTE_URL.'/usuarios/index'?>/<?php echo $parameters['respuesta']['pagina_actual']?><?php echo $var=(isset($parameters['usuarios']))? '/'.$parameters['usuarios'][$i]->idusuario:''?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.str_replace(' ', '_',$parameters['busqueda']): ''?>"
+                    class="btn-desactivar"><i class="far fa-trash-alt"></i></a>
 
             </td>
         </tr>
@@ -114,7 +115,7 @@
                 <li class="disabled">&laquo;</li>
             <?php elseif ($parameters['respuesta']['pagina_actual'] >  1 || $parameters['respuesta']['error'] == null):?>
             <a class="inicio"
-                href="<?php echo ROUTE_URL.'/usuarios'?>/usuariosDesactivados/<?php echo $parameters['respuesta']['pagina_anterior']?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>">&laquo;</a>
+                href="<?php echo ROUTE_URL.'/usuarios'?>/<?php echo $parameters['respuesta']['pagina_anterior']?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>">&laquo;</a>
             <?php endif;?> 
 
         <!-- Estableciendo numero de paginas -->
@@ -125,14 +126,14 @@
         <?php if ($parameters['respuesta']['pagina_actual'] == $i):?>
 
         <li class="Active">
-            <a href="<?php echo ROUTE_URL.'/usuarios'?>/usuariosDesactivados/<?php echo $i?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>"><?php echo $i?></a>
+            <a href="<?php echo ROUTE_URL.'/usuarios'?>/<?php echo $i?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>"><?php echo $i?></a>
         </li>
 
 
         <?php else:?>
 
         <li>
-            <a href="<?php echo ROUTE_URL.'/usuarios'?>/usuariosDesactivados/<?php echo $i?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>"><?php echo $i?></a>
+            <a href="<?php echo ROUTE_URL.'/usuarios'?>/<?php echo $i?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>"><?php echo $i?></a>
         </li>
 
         
@@ -144,7 +145,7 @@
                 <li class="disabled">&raquo;</li>
             <?php elseif ($parameters['respuesta']['pagina_actual'] <  $parameters['respuesta']['totalPaginas'] || $parameters['respuesta']['error'] == null):?>
             <a class="fin"
-                href="<?php echo ROUTE_URL.'/usuarios'?>/usuariosDesactivados/<?php echo $parameters['respuesta']['pagina_siguiente']?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>">&raquo;</a>
+                href="<?php echo ROUTE_URL.'/usuarios'?>/<?php echo $parameters['respuesta']['pagina_siguiente']?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>">&raquo;</a>
             <?php endif;?> 
 		</ul>
 
@@ -161,11 +162,11 @@
 
     <div class="encabezado">
 
-        <h3 style='color:#3cd300; font-size: 20px;'><i class="fas fa-user-check"></i></i></h3>
+        <h3 style='color:#f50b0b; font-size: 20px;'><i class="fas fa-user-slash"></i></h3>
     </div>
 
     <div class="cuerpo">
-        <h4>¿Desea activar al usuario?</h4>
+        <h4>¿Desea desactivar al usuario?</h4>
         <h3 style="color:white">
             <?php echo $parameters['usuario']->nombreusuario .' '.$parameters['usuario']->apellidousuario?></h3>
 
@@ -175,7 +176,7 @@
 
         <div class="aceptar">
 
-            <a href="<?php echo ROUTE_URL.'/usuarios/usuariosDesactivados'?>/<?php echo $parameters['respuesta']['pagina_actual']?>/<?php echo $var=(isset($parameters['usuario']))? $parameters['usuario']->idusuario:''?>/<?php echo 1?><?php echo $var = ($parameters['busqueda'] != null)?'/'.str_replace(' ', '_',$parameters['busqueda']): ''?>"
+            <a href="<?php echo ROUTE_URL.'/usuarios/index'?>/<?php echo $parameters['respuesta']['pagina_actual']?>/<?php echo $var=(isset($parameters['usuario']))? $parameters['usuario']->idusuario:''?>/<?php echo 1?><?php echo $var = ($parameters['busqueda'] != null)?'/'.str_replace(' ', '_',$parameters['busqueda']): ''?>"
                 class="btn-editar"><i class="fas fa-check"></i></a>
 
         </div>
