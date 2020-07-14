@@ -9,6 +9,9 @@
     // funcion para calcular edad
     require_once('helpers/calcularEdad.php');
     require_once('helpers/sanitize.php');
+    require_once('helpers/paginacion_helper.php');
+    require_once('helpers/utilidades_helper.php');
+    require_once('helpers/session_helper.php');
     //Cargamos todos los archivos de la carpeta library
     spl_autoload_register(function($className){
         require_once('library/' . $className .'.php');

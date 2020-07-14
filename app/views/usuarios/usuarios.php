@@ -1,101 +1,48 @@
 <?php require_once('../app/views/inc/header.php'); ?>
 
-<div class="" style="display: block; width: 20%">
-    <form action="<?php echo ROUTE_URL?>/usuarios/usuarios" id="form-filtrar" class="form"  method="get">
-        <!-- Clase que contiene tred div para ponerlos en una sola linea los tres  -->
-        <div class="inputBox-1">
-            <div class="inputBox">
-                <label for="fechanacimiento">Fecha de Nacimiento</label>
-                <input type="date" id="input" name='fechanacimiento'>
-            </div>
-        </div>
-        <div class="inputBox-1">
-            <div class="inputBox">
-                <label for="fecharegistro">Fecha de Registro</label>
-                <input type="date" id="input" name='fecharegistro'>
-            </div>
-        
-        </div>
-        <!-- Clase donde se guarda el radio y el checkbox -->
-        <div class="inputBox-1">
-            <!-- crear CheckBox -->
-            <div class="inputBox">
-                <div class="check">
-                    <label for="tipousario">Tipo Usuario</label>
-                    <br>
-                    <select name="tipousario" id="input">
-                        <option value="1">Administrador</option>
-                        <option value="2">Estandar</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="inputBox-1">
-            <!-- Crear radio-->
-            <div class="inputBox">
-                <div class="check">
-                    <label for="sexo">Sexo</label>
-                    <br>
-                    <select name="sexo" id="input">
-                        <option value="1">Hombre</option>
-                        <option value="2">Mujer</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!--Clase boton para los estilos   -->
-        <div class="inputBox-1">
-            <div class="boton">
-                <!-- Boton de guardar -->
-                <input type="submit" name="submit" value="Filtrar">
-            </div>
-        </div>
-    </form>
-</div>
 <table>
-    <thead>
-        <tr>
-            <!-- colspan="Numero de columnas que tendra la tabla" -->
-            <th colspan="8">
+	    <thead>
+			<tr>
+				<!-- colspan="Numero de columnas que tendra la tabla" -->
+                <th colspan="8">
                 <div class="title">
-                    <p>Lista de usuarios activos. Se encontraron
-                        <?php echo $parameters['totalArticulos']." Registros"?>
-                    </p>
-                    <p>
-                        <?php if ((isset($parameters['busqueda']) && $parameters['busqueda'] != '') || (isset($parameters['tipousario']) && $parameters['tipousario'] != '')):?>
-                        <a href="<?php echo ROUTE_URL?>/usuarios/usuarios" class="btn-editar"><i
+                <p>Lista de usuarios activos, se <?php echo $var = ($parameters['respuesta']['cuantos'] > 1)?'encontraron ':' encontro '?>
+                    <?php echo $parameters['respuesta']['cuantos']. $var = ($parameters['respuesta']['cuantos'] > 1)?' registros':' registro'?>
+                
+                </p>
+                <p>
+                    <?php if ($parameters['busqueda'] != null):?>
+                        <a href="<?php echo ROUTE_URL?>/usuarios" class="btn-editar"><i
                                 class="fas fa-redo"></i>Recargar</a>
-                        <?php endif?>
-                        <a href="javascript:abrirNuevoUsu()" class="btn-ver"><i class="far fa-plus-square"></i>
+                    <?php endif?>
+                        <a href="<?php echo ROUTE_URL?>/usuarios/nuevoUsuario" class="btn-ver"><i
+                                class="far fa-plus-square"></i>
                             Nuevo
                             usuario</a>
                         <a href="<?php echo ROUTE_URL?>/usuarios/usuariosDesactivados" class="btn-desactivar"><i
                                 class="fas fa-user-slash"></i>Desactivados</a>
 
-                    </p>
+                </p>
                 </div>
-            </th>
-        </tr>
-        <tr>
-            <!-- Se debe ajustar el ancho de las tablas con el numero de columnas-->
-            <th width="5">#</th>
-            <th>Nombre</th>
-            <th>Telefono</th>
-            <th>DUI</th>
-            <th>Edad</th>
-            <th>Tipo Usuario</th>
-            <th>Estado</th>
-            <th>Opciones</th>
-
-        </tr>
-    </thead>
-    <!-- si no se encuentra ningun registro -->
-    <tbody>
-        <?php if( !isset($parameters['usuarios']) or !$parameters['usuarios']):?>
+   	 		</tr>
+			<tr>
+				<!-- Se debe ajustar el ancho de las tablas -->
+				<th width="5">#</th>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>DUI</th>
+                <th>Edad</th>
+                <th>Tipo Usuario</th>
+                <th>Estado</th>
+                <th>Opciones</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+        <?php if( $parameters['respuesta']['error']):?>
         <tr>
             <td data-label="error">
-                ---
+                -
             </td>
             <td data-label="error">
                 ---
@@ -121,10 +68,10 @@
         </tr>
         <!-- si se encuentran registros -->
         <?php else:?>
-        <?php for ($i=0; $i < count($parameters['usuarios']); $i++):?>
+			<?php for($i = 0; $i < count($parameters['usuarios']); $i ++):?>
         <tr>
             <td data-label="#">
-                <?php echo $parameters['numeroRegistro'][$i] + 1?>
+                <?php echo $parameters['respuesta']['numIds'][$i] + 1?>
             </td>
             <td data-label="Nombre">
                 <?php echo $parameters['usuarios'][$i]->nombreusuario.' '.$parameters['usuarios'][$i]->apellidousuario?>
@@ -146,59 +93,126 @@
             </td>
             <td data-label="Opciones">
                 <!-- <a href="javascript:editarUsu()" class="btn-nuevo"><i class="far fa-edit"></i></a> -->
-                <a href="<?php echo ROUTE_URL?>/usuarios/index/<?php echo $parameters['usuarios'][$i]->idusuario?>?pagina=<?php echo $parameters['pagina']?>&busqueda=<?php echo $var = (isset($parameters['busqueda']))? $parameters['busqueda'] : ''?>"
+                <a href="<?php echo ROUTE_URL?>/usuarios/verUsuario<?php echo $var=(isset($parameters['usuarios']))? '/'.$parameters['usuarios'][$i]->idusuario:''?>/1"
                     class="btn-ver"><i class="fas fa-eye"></i></a>
-                <a href="<?php echo ROUTE_URL?>/usuarios/index/?editar=<?php echo $parameters['usuarios'][$i]->idusuario?>&pagina=<?php echo $parameters['pagina']?>&busqueda=<?php echo $var = (isset($parameters['busqueda']))? $parameters['busqueda'] : ''?>"
+                <a href="<?php echo ROUTE_URL?>/usuarios/actualizarUsuario<?php echo $var=(isset($parameters['usuarios']))? '/'.$parameters['usuarios'][$i]->idusuario:''?>"
                     class="btn-editar"><i class="far fa-edit"></i></a>
-                <a href="<?php echo ROUTE_URL?>/usuarios/index/?eliminar=<?php echo $parameters['usuarios'][$i]->idusuario?>&pagina=<?php echo $parameters['pagina']?>&busqueda=<?php echo $var = (isset($parameters['busqueda']))? $parameters['busqueda'] : ''?>"
+                <a href="<?php echo ROUTE_URL.'/usuarios/index'?>/<?php echo $parameters['respuesta']['pagina_actual']?><?php echo $var=(isset($parameters['usuarios']))? '/'.$parameters['usuarios'][$i]->idusuario:''?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.str_replace(' ', '_',$parameters['busqueda']): ''?>"
                     class="btn-desactivar"><i class="far fa-trash-alt"></i></a>
+
             </td>
         </tr>
-        <?php endfor;?>
-        <?php endif; ?>
-    </tbody>
-</table>
-
-<!-- creando paginacion -->
-<section class="paginacion">
-    <ul>
-        <!-- // bloqueando el boton retroceso -->
-        <?php if ($parameters['pagina'] == 1 and count($parameters['usuarios'])  !=0):?>
-        <li class="disabled">&laquo;</li>
-        <?php elseif ($parameters['pagina'] > 1 and count($parameters['usuarios']) != 0):?>
-        <a class="inicio"
-            href="?pagina=<?php echo $parameters['pagina'] - 1?><?php echo $var=(isset($parameters['busqueda']))?'&busqueda='.$parameters['busqueda']:''?><?php echo $var=(isset($parameters['fechanacimiento']))?'&fechanacimiento='.$parameters['fechanacimiento']:''?><?php echo $var=(isset($parameters['fecharegistro']))?'&fecharegistro='.$parameters['fecharegistro']:''?><?php echo $var=(isset($parameters['tipousario']))?'&tipousario='.$parameters['tipousario']:''?><?php echo $var=(isset($parameters['sexo']))?'&sexo='.$parameters['sexo']:''?>">&laquo;</a>
+        <?php endfor?>
         <?php endif;?>
+	    </tbody>
+	</table>
+	<!-- Paginacion -->
+	<section class="paginacion">
+
+		<ul>
+    
+            <?php if ($parameters['respuesta']['pagina_actual'] ==  1 || $parameters['respuesta']['error'] == 1) :?>
+                <li class="disabled">&laquo;</li>
+            <?php elseif ($parameters['respuesta']['pagina_actual'] >  1 || $parameters['respuesta']['error'] == null):?>
+            <a class="inicio"
+                href="<?php echo ROUTE_URL.'/usuarios'?>/<?php echo $parameters['respuesta']['pagina_anterior']?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>">&laquo;</a>
+            <?php endif;?> 
 
         <!-- Estableciendo numero de paginas -->
 
 
-        <?php for ($i=1; $i <= $parameters['numeroPaginas']; $i++):?>
+        <?php for ($i=1; $i <= $parameters['respuesta']['totalPaginas']; $i++):?>
 
-        <?php if ($parameters['pagina'] == $i):?>
+        <?php if ($parameters['respuesta']['pagina_actual'] == $i):?>
 
-        <li class="Active"><a href="usuarios?pagina=<?php echo $i?>"><?php echo $i?></a></li>
+        <li class="Active">
+            <a href="<?php echo ROUTE_URL.'/usuarios'?>/<?php echo $i?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>"><?php echo $i?></a>
+        </li>
 
 
         <?php else:?>
 
-        <li><a
-                href="usuarios?pagina=<?php echo $i?><?php echo $var=(isset($parameters['busqueda']))?'&busqueda='.$parameters['busqueda']:''?><?php echo $var=(isset($parameters['fechanacimiento']))?'&fechanacimiento='.$parameters['fechanacimiento']:''?><?php echo $var=(isset($parameters['fecharegistro']))?'&fecharegistro='.$parameters['fecharegistro']:''?><?php echo $var=(isset($parameters['tipousario']))?'&tipousario='.$parameters['tipousario']:''?><?php echo $var=(isset($parameters['sexo']))?'&sexo='.$parameters['sexo']:''?>"><?php echo $i?></a>
+        <li>
+            <a href="<?php echo ROUTE_URL.'/usuarios'?>/<?php echo $i?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>"><?php echo $i?></a>
         </li>
 
-
+        
         <?php endif?>
 
         <?php endfor;?>
-        <!-- bloqueando el boton de siguiente cuando se llega a la ultima pagina -->
-        <?php if ($parameters['pagina'] == $parameters['numeroPaginas'] and count($parameters['usuarios']) != 0):?>
-        <li class="disabled">&raquo;</li>
-        <?php elseif($parameters['pagina'] < $parameters['numeroPaginas'] and count($parameters['usuarios']) != 0): ?>
-        <a class="fin"
-            href="?pagina=<?php echo $parameters['pagina'] + 1?><?php echo $var=(isset($parameters['busqueda']))?'&busqueda='.$parameters['busqueda']:''?><?php echo $var=(isset($parameters['fechanacimiento']))?'&fechanacimiento='.$parameters['fechanacimiento']:''?><?php echo $var=(isset($parameters['fecharegistro']))?'&fecharegistro='.$parameters['fecharegistro']:''?><?php echo $var=(isset($parameters['tipousario']))?'&tipousario='.$parameters['tipousario']:''?><?php echo $var=(isset($parameters['sexo']))?'&sexo='.$parameters['sexo']:''?>">&raquo;</a>
+          <!-- bloqueando el boton de siguiente cuando se llega a la ultima pagina -->
+            <?php if ($parameters['respuesta']['pagina_actual'] ==  $parameters['respuesta']['totalPaginas'] || $parameters['respuesta']['error'] == 1) :?>
+                <li class="disabled">&raquo;</li>
+            <?php elseif ($parameters['respuesta']['pagina_actual'] <  $parameters['respuesta']['totalPaginas'] || $parameters['respuesta']['error'] == null):?>
+            <a class="fin"
+                href="<?php echo ROUTE_URL.'/usuarios'?>/<?php echo $parameters['respuesta']['pagina_siguiente']?>/<?php echo 0?>/<?php echo 0?><?php echo $var = ($parameters['busqueda'] != null)?'/'.$parameters['busqueda']: ''?>">&raquo;</a>
+            <?php endif;?> 
+		</ul>
 
-        <?php endif?>
-    </ul>
-</section>
+                
+	</section>
+    </main>
 
-<?php require_once('../app/views/inc/footer.php');?>
+</div>
+</div>
+
+<!-- Eliminar -->
+<?php if($parameters['usuario']):?>
+<div class="box" id="eliminar-usuario">
+
+    <div class="encabezado">
+
+        <h3 style='color:#f50b0b; font-size: 20px;'><i class="fas fa-user-slash"></i></h3>
+    </div>
+
+    <div class="cuerpo">
+        <h4>¿Desea desactivar al usuario?</h4>
+        <h3 style="color:white">
+            <?php echo $parameters['usuario']->nombreusuario .' '.$parameters['usuario']->apellidousuario?></h3>
+
+    </div>
+
+    <div class="pie">
+
+        <div class="aceptar">
+
+            <a href="<?php echo ROUTE_URL.'/usuarios/index'?>/<?php echo $parameters['respuesta']['pagina_actual']?>/<?php echo $var=(isset($parameters['usuario']))? $parameters['usuario']->idusuario:''?>/<?php echo 1?><?php echo $var = ($parameters['busqueda'] != null)?'/'.str_replace(' ', '_',$parameters['busqueda']): ''?>"
+                class="btn-editar"><i class="fas fa-check"></i></a>
+
+        </div>
+
+        <div class="aceptar">
+
+            <a href="javascript:cerrar()" class="btn-desactivar"><i class="fas fa-times"></i></a>
+
+        </div>
+
+    </div>
+
+
+
+</div>
+<?php endif?>
+
+
+<!-- llamar archivo js -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="<?php echo ROUTE_URL?>/js/menu.js"></script>
+
+<!-- Direcciones de javascrit incluye las validaciones de form-usuario -->
+<script src="<?php echo ROUTE_URL?>/js/validaciones.js"></script>
+
+
+<?php if($parameters['usuario']):?>
+<script>
+document.getElementById('eliminar-usuario').style.display = "block";
+display = document.querySelector("#blur");
+display.classList.toggle('active');
+</script>
+<?php endif?>
+
+
+</body>
+
+</html>
