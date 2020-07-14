@@ -6,7 +6,7 @@
 
 .btn-ver{
 	border-radius: 50px;
-	padding: 5px 8px;
+	padding: 5px 5px;
 	background-color: #fff; 
 	color: #1236da; 
 	border: 1px solid #1236da;
@@ -36,7 +36,7 @@
 }
 .btn-editar{
 	border-radius: 50px;
-	padding: 5px 8px;
+	padding: 5px 5px;
 	background-color: #fff; 
 	color: #278a00; 
 	border: 1px solid #3cd300;
@@ -46,11 +46,11 @@
 .btn-desactivar:hover {
 	background-color: #f50b0b;
 	color: white;
-	box-shadow: 1px 4px 5px #ce0d0d;
+	box-shadow: 1px 4px 5px #940a0a;
 }
 .btn-desactivar{
 	border-radius: 50px;
-	padding: 5px 10px;
+	padding: 5px 6px;
 	background-color: #fff; 
 	color: #8b0909; 
 	border: 1px solid #f50b0b;
@@ -73,7 +73,7 @@ table {
 }
 
 thead tr:first-child {
-	background: #313545;
+	background: #202020;
 	color: #fff;
 	border: none;
 }
@@ -154,7 +154,7 @@ thead tr:last-child th {
 
 /*//////////////////////////////////////////////*/
 
-@media screen and (max-width: 1102px) {
+@media screen and (max-width: 480px) {
 	table {
         border:1;
 		width: 70%;

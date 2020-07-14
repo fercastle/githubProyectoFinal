@@ -1,24 +1,25 @@
 /* Para hacer reponsive */
-/* *{
+*{
     margin: 0;
     padding: 0;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-} */
+}
 /* Fondo interno estilo*/
 body{
-  
+    margin: 0;
+    padding: 200px;
+    width: 200px;
+    font-family: sans-serif;
     background-image: url("../img/minsal.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     -webkit-background-size: cover;
     background-size: cover;
 }
-
-
 /* Estilo para la clase box */
-/* .box{
+.box{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -29,18 +30,18 @@ body{
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
     border-radius: 10px;
-} */
+}
 /* Estilo para el titulo */
-/* .box h2{
+.box h2{
     margin: 0 0 30px;
     padding: 0;
     color: #fff;
     text-align: center;
     font-family: sans-serif;
     font-style:italic;
-} */
+}
 /* Estilo para las cajas de texto clase inputBox */
-/* .box .inputBox{
+.box .inputBox{
     position: relative;
     
 }
@@ -55,9 +56,9 @@ body{
     border-bottom: 1px solid #fff;
     outline: none;
     background: transparent;
-} */
+}
 /* Estilo para los label inputBox */
-/* .box .inputBox label{
+.box .inputBox label{
     position: absolute;
     top: 0;
     left: 0;
@@ -74,9 +75,9 @@ body{
     left: 0;
     color: #03a9f4;
     font-size: 14px;
-} */
-
-/* .box input[type="submit"]{
+}
+/* Estilos para el boton  */
+.box input[type="submit"]{
     background: transparent;
     font-size: 16px;
     display: inline-block;
@@ -88,7 +89,7 @@ body{
     margin-left: 35%;
     cursor: pointer;
     border-radius: 5px; 
-    
+    /* Sombra en el boton */
     text-decoration: none;
     box-shadow: 0px 0px 0px #29414d;
 }
@@ -97,4 +98,4 @@ body{
 }
 .box input[type="submit"]:active{
     box-shadow: none;
-} */
+}
