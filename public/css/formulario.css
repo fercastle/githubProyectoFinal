@@ -1,13 +1,38 @@
+* { 
+    margin: 0; 
+    padding: 0; 
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box; 
+} 
+#cerrar{
+  
+    background: transparent; 
+    font-size: 16px; 
+    border: none; 
+    outline: none; 
+    color: #fff; 
+    background: #29414d; 
+    padding: 10px 20px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    /* Sombra en el boton */ 
+    text-decoration: none; 
+    box-shadow: 0px 0px 0px #29414d; 
+    margin-bottom: 10px; 
+    margin-top: 40px;
+    width: 50%;
+}
 
- 
+#cerrar:hover{
+    box-shadow: 0px 1px 0px #03a9f4; 
+}
 /* Estilo para la clase box */ 
  
 .box { 
     position: absolute; 
     top: 50%; 
     left: 50%; 
-
-    width: 25%;
     transform: translate(-50%, -50%); 
     /* Dar tamaño a la ventana */ 
     /* width: min-content; 
@@ -20,27 +45,136 @@
     display: none;
 } 
 
-.box .encabezado {
-    margin-top: 10px;
-    text-align: center;
+.box .formularios{
+    position: absolute; 
 }
-.box .encabezado i{
-    
-    font-size: 60px;
+/* Estilo para el titulo */ 
+ 
+.box h3 { 
+    margin: 20px auto; 
+    padding: 0px; 
+    color: rgb(5, 153, 216); 
+    text-align: center; 
+    font-family: sans-serif; 
+    font-style: italic; 
+} 
+
+/* Para poner en dos o tres columnas los input de el formulario  */ 
+.box .form .inputBox-1 { 
+    display: grid; 
+    grid-template-columns: 1fr; 
+}   
+
+.box .form .inputBox-2 { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+} 
+ 
+.box .inputBox-3 { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr; 
+} 
+.box .inputBox-4 { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
+} 
+
+.box .form .inputBox{
+    display: grid;
+    grid-template-columns: 1fr; 
+
+}
+/* Estilo a los input */
+.box .form .inputBox #input { 
+    background: #202020; 
+    outline: none; 
+    border: none; 
+    padding: 5px; 
+    margin: 5px; 
+    border-radius: 6px; 
+    color: #fff; 
+    font-style: 18px; 
+    border: 1px solid #292929;   
+} 
+
+/* Para optener el efecto a pasar el mouse */
+.box .form .inputBox #input:hover { 
+    background: #292929; 
+    outline: none; 
+    border: none; 
+    padding: 5px; 
+    margin: 5px; 
+    border-radius: 6px; 
+    color: #fff; 
+    font-style: 18px; 
+    border: 1px solid #0881b9; 
 }
 
-.box .cuerpo{
-    margin: 10px 10px;
-    color:white; 
-    text-align: center
-}
-.box .pie{
-    margin: 20px;
-    
-    display: flex;
-    justify-content: space-evenly;
-}
-.box .pie .aceptar {
+/* Estilo label */ 
+ 
+label { 
+    color: rgb(5, 153, 216); 
+    margin: 10px; 
+    margin-bottom: 5px;
+    font-size: 17px; 
+} 
+
+/* Estilos al checkBox para reducirlo al tamaño de los demas */
+.box .inputBox-2 .check label{
+    display: block;
+} 
+.box .inputBox-2 .check #input{
+    width: 63%;
+} 
+
+/* Estilo a los label de los radio boton y los efectos*/
+
+.box .radio label{
+    cursor: pointer;
     display: inline-block;
+    position: relative;
+    font-size: 17px; 
+    border-radius: 1px 1px 1px 1px;
+} 
 
+/* posicion de los botones del radio */
+.box .radio #genero{ 
+    position: relative;
+    margin-left: 50px;
+    margin-bottom: 5px;
+    display: block; 
+}   
+
+/* Estilos al boton guardar */ 
+ 
+.box .form .boton { 
+    font-weight:bold;
+    text-align: center ;
+    
+} 
+ 
+.box .form input[type="submit"] { 
+    background: transparent; 
+    font-size: 16px; 
+    border: none; 
+    outline: none; 
+    color: #fff; 
+    background: #29414d; 
+    padding: 10px 20px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    /* Sombra en el boton */ 
+    text-decoration: none; 
+    box-shadow: 0px 0px 0px #29414d; 
+    margin-bottom: 10px; 
+    margin-top: 40px;
+    width: 50%;
+} 
+ 
+.box .form input[type="submit"]:hover { 
+    box-shadow: 0px 1px 0px #03a9f4; 
+} 
+ 
+.box .form input[type="submit"]:active { 
+    box-shadow: none; 
 }
